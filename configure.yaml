@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  become: true
+  gather_facts: false
+  pre_tasks:
+
+  - name: Update
+    tags: always
+    apt:
+      update_cache: yes
+      cache_valid_time: 86400
+
+  # - name: Upgrade
+  #   apt:
+  #     upgrade: dist
+
+- hosts: dev
+  become: true
+  gather_facts: false
+  vars:
+    - DB_SERVER: localhost
+    - DB_USERNAME: test_user
+    - DB_PASSWORD: test_0000
+    - DB_NAME: test_db
+  roles:
+    - git
+    - net_tools
+    - php
+    - nginx
+    - mysql
